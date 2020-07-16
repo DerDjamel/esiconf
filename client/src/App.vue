@@ -37,24 +37,24 @@
       </v-btn>
     </v-app-bar>
 
-    <v-content>
-      <HelloWorld/>
-    </v-content>
+    <v-main>
+      <router-view></router-view>
+    </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Cookies from 'js-cookie';
 
 export default {
   name: 'App',
 
-  components: {
-    HelloWorld,
-  },
-
   data: () => ({
     //
   }),
+
+  created(){
+    Cookies.set('token2', 'token5');
+  }
 };
 </script>
