@@ -11,4 +11,4 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('me', 'AuthController@me');
 });
 
-Route::resource('conference', 'ConferenceController');
+Route::apiResource('conference', 'ConferenceController');

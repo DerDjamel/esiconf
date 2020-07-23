@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Conference;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreConference;
+use App\Http\Resources\Conference as ConferenceResource;
+use App\Http\Resources\ConferenceCollection;
 
 class ConferenceController extends Controller
 {
@@ -21,7 +23,7 @@ class ConferenceController extends Controller
      */
     public function index()
     {
-        // todo : the feed of conferences
+        return new ConferenceCollection(Conference::paginate(10));
     }
      
 
@@ -33,8 +35,9 @@ class ConferenceController extends Controller
      */
     public function store(StoreConference $request)
     {
+        $conference = new ConferenceResource(auth()->user()->conferences()->create($request->all()));
         return response()->json([
-            'conference'    => auth()->user()->conferences()->create($request->all()),
+            'conference'    =>  $conference,
             'message'       => 'Your Conference has been created successfully'
         ]);
     }
@@ -47,7 +50,7 @@ class ConferenceController extends Controller
      */
     public function show(Conference $conference)
     {
-        return response()->json($conference);
+        return response()->json(new ConferenceResource($conference));
     }
 
 
