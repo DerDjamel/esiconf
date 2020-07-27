@@ -5,12 +5,17 @@
 use Carbon\Carbon;
 use App\Conference;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 $factory->define(Conference::class, function (Faker $faker) {
     $now = new Carbon();
     $copy = $now->copy()->addDays(5);
+    $name = $faker->sentence;
+    $slug = Str::slug($name);
+    $count = Conference::where('slug', 'like', '%' . $slug . '%')->count();
     return [
-        "name"          => $faker->sentence,
+        'name'          => $name,
+        'slug'          => $count >= 1 ? $slug . '-' . ($count + 1) : $slug,
         'country'       => $faker->country,
         'city'          => $faker->city,
         'description'   => $faker->text,

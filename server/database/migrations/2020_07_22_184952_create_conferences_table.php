@@ -17,7 +17,7 @@ class CreateConferencesTable extends Migration
             $table->id();
             $table->string('name');
             // $table->string('abbr');
-            // $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('country');
             $table->string('city');
             $table->string('webpage');

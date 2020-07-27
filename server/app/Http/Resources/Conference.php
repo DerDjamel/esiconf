@@ -19,6 +19,7 @@ class Conference extends JsonResource
         return [
             'id'            => $this->id,
             'name'          => $this->name,
+            'slug'          => $this->slug,
             'country'       => $this->country,
             'city'          => $this->city,
             'start'         => Carbon::parse($this->start)->toFormattedDateString(),
