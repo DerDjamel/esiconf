@@ -12,3 +12,5 @@ Route::group(['prefix' => 'auth'], function ($router) {
 });
 
 Route::apiResource('conference', 'ConferenceController');
+
+Route::apiResource('paper', 'PaperController');
