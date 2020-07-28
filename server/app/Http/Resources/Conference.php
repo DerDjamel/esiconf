@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\User as UserResource;
+use App\Http\Resources\Reviewer as ReviewerResource;
 use Carbon\Carbon;
 class Conference extends JsonResource
 {
@@ -26,7 +27,8 @@ class Conference extends JsonResource
             'end'           => Carbon::parse($this->end)->toFormattedDateString(),
             'webpage'       => $this->webpage,
             'description'   => $this->description,
-            'chair'         => new UserResource($this->user)
+            'chair'         => new UserResource($this->user),
+            'reviewers'     => ReviewerResource::collection($this->reviewers)
         ];
     }
 }

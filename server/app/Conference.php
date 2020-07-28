@@ -14,6 +14,11 @@ class Conference extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function reviewers()
+    {
+        return $this->hasMany('App\Reviewer');
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';
