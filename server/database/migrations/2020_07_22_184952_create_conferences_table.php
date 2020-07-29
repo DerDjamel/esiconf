@@ -24,8 +24,7 @@ class CreateConferencesTable extends Migration
             $table->text('description');
             $table->date('start');
             $table->date('end');
-            //$tabel->date('papers_call');
-            //$table->date('submission_deadline');
+            $table->string('submission_status')->default('closed');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

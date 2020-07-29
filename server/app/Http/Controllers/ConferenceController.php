@@ -84,4 +84,15 @@ class ConferenceController extends Controller
         $conference->delete();
         return response()->json(['message' => 'Conference has been deleted']);
     }
+
+    public function submissionStatus(Conference $conference)
+    {
+        $this->authorize('papercall', $conference);
+    
+        $conference->submission_status === 'closed' ? 
+            $conference->update(['submission_status' => 'open']) : $conference->update(['submission_status' => 'closed']);
+
+        return response()->json([ 'message' => 'Your conference status has been updated']); 
+        
+    }
 }

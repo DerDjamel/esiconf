@@ -10,6 +10,7 @@ $factory->define(Paper::class, function (Faker $faker) {
         'title' => $faker->sentence,
         'abstract' => $faker->text,
         'comment' => $faker->text,
+        'path'      => 'thisis a path to a file',
         'conference_id' => factory('App\Conference')->create()->id,
     ];
 });

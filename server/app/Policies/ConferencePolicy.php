@@ -34,4 +34,9 @@ class ConferencePolicy
         return $user->id === $conference->user_id;
     }
 
+    public function papercall(User $user, Conference $conference)
+    {
+        return $user->id === $conference->user_id;
+    }
+
 }
