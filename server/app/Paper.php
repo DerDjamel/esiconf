@@ -11,4 +11,11 @@ class Paper extends Model
     public function authors(){
         return $this->hasMany('App\Author');
     }
+
+    public function conference()
+    {
+        return $this->belongsTo('App\Conference');
+    }
+
+ 
 }

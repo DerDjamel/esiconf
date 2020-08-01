@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReviewersTable extends Migration
+class CreateBidsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateReviewersTable extends Migration
      */
     public function up()
     {
-        Schema::create('reviewers', function (Blueprint $table) {
+        Schema::create('bids', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('conference_id');
-            $table->foreign('conference_id')->references('id')->on('conferences');
-            $table->unsignedBigInteger('paper_id')->nullable();
+            $table->string('intrest_level');
+            $table->unsignedBigInteger('reviewer_id');
+            $table->foreign('reviewer_id')->references('id')->on('reviewers');
+            $table->unsignedBigInteger('paper_id');
             $table->foreign('paper_id')->references('id')->on('papers');
             $table->timestamps();
         });
@@ -32,6 +31,6 @@ class CreateReviewersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviewers');
+        Schema::dropIfExists('bids');
     }
 }

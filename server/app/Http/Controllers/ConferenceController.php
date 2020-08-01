@@ -95,4 +95,14 @@ class ConferenceController extends Controller
         return response()->json([ 'message' => 'Your conference status has been updated']); 
         
     }
+
+    public function biddingStatus(Conference $conference)
+    {
+        $this->authorize('biddingStatus', $conference);
+    
+        $conference->paper_bidding === 'closed' ? 
+            $conference->update(['paper_bidding' => 'open']) : $conference->update(['paper_bidding' => 'closed']);
+
+        return response()->json([ 'message' => 'Your conference status has been updated']);
+    }
 }

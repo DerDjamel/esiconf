@@ -13,5 +13,8 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
 Route::apiResource('conference', 'ConferenceController');
 Route::put('conference/{conference}/submissionStatus', 'ConferenceController@submissionStatus');
+Route::put('conference/{conference}/biddingStatus', 'ConferenceController@biddingStatus');
 
 Route::apiResource('paper', 'PaperController');
+
+Route::post('bid/{paper}', 'BidController@store');

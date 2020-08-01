@@ -39,4 +39,9 @@ class ConferencePolicy
         return $user->id === $conference->user_id;
     }
 
+    public function biddingStatus(User $user, Conference $conference)
+    {
+        return $user->id === $conference->user_id;
+    }
+
 }

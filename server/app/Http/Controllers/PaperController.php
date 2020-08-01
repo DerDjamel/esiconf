@@ -79,18 +79,18 @@ class PaperController extends Controller
      */
     public function destroy(Paper $paper)
     {
-        // if the authenticated user is one of the authors of the paper 
+        // if the authenticated user is one of the authors of the paper or a chair of the conference
         // then he can delete it from the the cconference submissions 
-        if (!$paper->authors->find(auth()->id())) {
+        if ($paper->conference->user->id === auth()->id() || $paper->authors->find(auth()->id())) {
+            Author::where('paper_id', $paper->id)->delete();
+            $paper->delete();
             return response()->json([
-                'error' => 'You are not an Author of the Paper'
+                'message' => 'Paper has been deleted'
             ]);
         }
 
-        Author::where('paper_id', $paper->id)->delete();
-        $paper->delete();
         return response()->json([
-            'message' => 'Your Paper has been deleted'
+            'error' => 'You are not an Author of the Paper or the Chair of the Conference'
         ]);
     }
 }
