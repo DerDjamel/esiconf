@@ -4,8 +4,46 @@
       v-model="drawer"
       :clipped="$vuetify.breakpoint.lgAndUp"
       app
+      :mini-variant='mini'
     >
-      
+      <v-list dense nav>
+        <v-list-item link v-for="(item, i) in user_items" :key="i">
+           <v-list-item-icon>
+            <v-icon color="primary" v-text="item.icon"></v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.text"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+      </v-list>
+
+      <v-divider></v-divider>
+
+      <v-list dense nav>
+        <v-list-item link v-for="(item, i) in resources_items" :key="i">
+           <v-list-item-action>
+            <v-icon color="primary">{{item.icon}}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.text }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-divider></v-divider>
+
+      <v-list dense nav>
+        <v-list-item link v-for="(item, i) in owned_items" :key="i">
+           <v-list-item-icon>
+            <v-icon color="primary" v-text="item.icon" ></v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.text"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
     </v-navigation-drawer>
 
     <v-app-bar
@@ -13,7 +51,7 @@
       app
       color="blue darken-3"
       dark >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="mini = !mini"></v-app-bar-nav-icon>
       <v-toolbar-title
         style="width: 300px"
         class="ml-0 pl-4"
@@ -33,12 +71,32 @@
       ></v-text-field>
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-bell</v-icon>
-      </v-btn>
+      <v-tooltip color="primary" bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon class="mr-1" v-on="on" v-bind="attrs"> 
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>  
+        </template>
+        <span>Create a new Conference</span>
+      </v-tooltip>
+
+      <v-tooltip color="primary" bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon class="mr-1" v-on="on" v-bind="attrs"> 
+            <v-icon>mdi-bell</v-icon>
+          </v-btn>  
+        </template>
+        <span>Notifications</span>
+      </v-tooltip>
+      
+      <v-tooltip color="primary" bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon class="mr-1" v-on="on" v-bind="attrs"> 
+            <v-icon>mdi-exit-to-app</v-icon>
+          </v-btn>  
+        </template>
+        <span>Logout</span>
+      </v-tooltip>
 
     <!-- End of v-app-bar -->
     </v-app-bar>
@@ -61,8 +119,21 @@ export default {
   name: 'App',
 
   data: () => ({
-    drawer : false,
+    drawer : true,
+    mini: true,
     under: true,
+    user_items : [
+      {icon : 'mdi-account-circle', text: 'Profile',}
+    ],
+    resources_items : [
+      {icon : 'mdi-text-box-search-outline', text: 'Browse Conferences',}
+    ],
+    owned_items : [
+      {icon : 'mdi-desk', text: 'My Conferences',},
+      {icon : 'mdi-file-outline', text: 'My Papers',},
+      {icon : 'mdi-file-find', text: 'My Reviews',},
+      {icon : 'mdi-gavel', text: 'My Bids',},
+    ],
   }),
 };
 </script>
