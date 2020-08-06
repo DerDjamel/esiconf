@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie';
+
 
 export default {
   name: 'App',
@@ -52,9 +52,5 @@ export default {
   data: () => ({
     //
   }),
-
-  created(){
-    Cookies.set('token2', 'token5');
-  }
 };
 </script>

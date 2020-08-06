@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 const state = {
     user        : null,
-    token       : Cookies.get('token') || null,
+    token       : Cookies.get('access_token') || null,
     error       : null,
     loading     : false,
     isLogged    : false
@@ -25,12 +25,11 @@ const mutations = {
     },
     
     loginSuccess(state, { access_token }){
+        Cookies.set("access_token", access_token, { expires: 7 });
         state.loading   = false;
         state.error     = null;
         state.token     = access_token;
         state.isLogged  = true;
-
-        Cookies.set("token", access_token);
     },
 
     loginFailure(state, { error }){
@@ -40,7 +39,6 @@ const mutations = {
     },
 
     fetchUserSuccess(state, user) {
-        console.log("user ==> :" + user);
         state.user = user;
         state.isLogged = true;
         state.loading   = false;
