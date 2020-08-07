@@ -3,8 +3,13 @@ import VueRouter from 'vue-router'
 
 import store from '@/store';
 
+// views
 import Home from '@/views/Home.vue'
 import Login from '@/views/auth/Login.vue'
+import ListConferences from '@/views/conference/list-conferences.vue';
+import SingleConference from '@/views/conference/single-conference.vue';
+
+
 
 // middlewares
 import guest from '@/middlewares/guest';
@@ -29,6 +34,22 @@ Vue.use(VueRouter)
       component: Login,
       meta : {
         middleware : [guest]
+      }
+    },
+    {
+      path: '/conferences',
+      name: 'Conferences',
+      component: ListConferences,
+      meta : {
+        middleware : [auth, authCheck]
+      }
+    },
+    {
+      path: '/conference',
+      name: 'Single-conference',
+      component: SingleConference,
+      meta : {
+        middleware : [auth, authCheck]
       }
     },
 
