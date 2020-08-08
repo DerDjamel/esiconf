@@ -9,6 +9,7 @@ import Login from '@/views/auth/Login.vue'
 import ListConferences from '@/views/conference/list-conferences.vue';
 import SingleConference from '@/views/conference/single-conference.vue';
 import SingleReview from '@/views/review/single-review.vue';
+import SinglePaper from '@/views/paper/single-paper.vue';
 
 
 
@@ -57,6 +58,14 @@ Vue.use(VueRouter)
       path: '/review',
       name: 'SingleReview',
       component: SingleReview,
+      meta : {
+        middleware : [auth, authCheck]
+      }
+    },
+    {
+      path: '/paper',
+      name: 'SinglePaper',
+      component: SinglePaper,
       meta : {
         middleware : [auth, authCheck]
       }
