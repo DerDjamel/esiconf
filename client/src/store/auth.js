@@ -25,7 +25,7 @@ const mutations = {
     },
     
     loginSuccess(state, { access_token }){
-        Cookies.set("access_token", access_token, { expires: 7 });
+        Cookies.set("access_token", access_token, { expires: 1 });
         state.loading   = false;
         state.error     = null;
         state.token     = access_token;
