@@ -46,6 +46,36 @@
 
     </v-navigation-drawer>
 
+    <!-- Notifications side bar -->
+    <v-navigation-drawer
+                temporary
+                :right="right"
+                v-model="notifications"
+                fixed
+                app
+                width="300px"
+        >
+            <v-toolbar flat dark class="primary">
+                <v-toolbar-title class="font-weight-bold">Notifications</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-btn icon @click.stop="notifications = false">
+                    <v-icon>mdi-close</v-icon>
+                </v-btn>
+            </v-toolbar>
+
+            <v-list dense>
+                <div v-for="i in 15" :key="i">
+                  <v-list-item>
+                    <v-list-item-content>
+                      <v-list-item-content class="text-subtitle-2">Lorem ipsum dolor, sit amet consectet adipisicing elit cing elit cing elit</v-list-item-content>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-divider></v-divider>
+                </div>
+            </v-list>
+            
+        </v-navigation-drawer>
+
     <v-app-bar
       :clipped-left="$vuetify.breakpoint.lgAndUp"
       app
@@ -82,7 +112,7 @@
 
       <v-tooltip color="primary" bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn icon class="mr-1" v-on="on" v-bind="attrs"> 
+          <v-btn icon class="mr-1" v-on="on" v-bind="attrs" @click.stop="notifications = true"> 
             <v-icon>mdi-bell</v-icon>
           </v-btn>  
         </template>
@@ -120,6 +150,8 @@ export default {
 
   data: () => ({
     drawer : true,
+    notifications: false,
+    right: true,
     mini: true,
     under: true,
     user_items : [
