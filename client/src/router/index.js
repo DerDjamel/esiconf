@@ -10,7 +10,9 @@ import ListConferences from '@/views/conference/list-conferences.vue';
 import SingleConference from '@/views/conference/single-conference.vue';
 import SingleReview from '@/views/review/single-review.vue';
 import SinglePaper from '@/views/paper/single-paper.vue';
-
+import ConferenceForm from '@/components/conference/conference-form.vue';
+import ReviewForm from '@/components/review/review-form.vue';
+import PaperForm from '@/components/paper/paper-form.vue';
 
 
 // middlewares
@@ -55,6 +57,14 @@ Vue.use(VueRouter)
       }
     },
     {
+      path: '/conference/create',
+      name: 'ConferenceForm',
+      component: ConferenceForm,
+      meta : {
+        middleware : [auth, authCheck]
+      }
+    },
+    {
       path: '/review',
       name: 'SingleReview',
       component: SingleReview,
@@ -63,9 +73,25 @@ Vue.use(VueRouter)
       }
     },
     {
+      path: '/review/create',
+      name: 'ReviewForm',
+      component: ReviewForm,
+      meta : {
+        middleware : [auth, authCheck]
+      }
+    },
+    {
       path: '/paper',
       name: 'SinglePaper',
       component: SinglePaper,
+      meta : {
+        middleware : [auth, authCheck]
+      }
+    },
+    {
+      path: '/paper/create',
+      name: 'PaperForm',
+      component: PaperForm,
       meta : {
         middleware : [auth, authCheck]
       }
