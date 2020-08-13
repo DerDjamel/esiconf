@@ -49,17 +49,18 @@ Vue.use(VueRouter)
       }
     },
     {
-      path: '/conference',
-      name: 'SingleConference',
-      component: SingleConference,
+      path: '/conference/create',
+      name: 'ConferenceForm',
+      component: ConferenceForm,
       meta : {
         middleware : [auth, authCheck]
       }
     },
     {
-      path: '/conference/create',
-      name: 'ConferenceForm',
-      component: ConferenceForm,
+      path: '/conference/:slug',
+      name: 'SingleConference',
+      component: SingleConference,
+      props : true,
       meta : {
         middleware : [auth, authCheck]
       }
@@ -81,14 +82,6 @@ Vue.use(VueRouter)
       }
     },
     {
-      path: '/paper',
-      name: 'SinglePaper',
-      component: SinglePaper,
-      meta : {
-        middleware : [auth, authCheck]
-      }
-    },
-    {
       path: '/paper/create',
       name: 'PaperForm',
       component: PaperForm,
@@ -96,6 +89,16 @@ Vue.use(VueRouter)
         middleware : [auth, authCheck]
       }
     },
+    {
+      props: true,
+      path: '/paper/:id',
+      name: 'SinglePaper',
+      component: SinglePaper,
+      meta : {
+        middleware : [auth, authCheck]
+      }
+    },
+    
 
 ]
 

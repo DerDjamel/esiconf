@@ -6,7 +6,7 @@
                     <v-card outlined>
                         <v-card-title class="text-h6 flex-column align-start mb-5"> 
                             <div>Paper :</div>
-                            <div class="text-h4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius pariatur assumenda mod</div>
+                            <div class="text-h4">{{ paper.title }}</div>
                         </v-card-title>
                         <v-divider></v-divider>
                         <v-simple-table>
@@ -18,29 +18,22 @@
                             <tbody>
                                 <tr>
                                     <td>Conference</td>
-                                    <td>name of conference</td>
+                                    <td>{{ paper.conference.name }}</td>
                                 </tr>
                                 <tr>
-                                    <td>author</td>
-                                    <td>name of author</td>
+                                    <td>status</td>
+                                    <td>{{ paper.status }}</td>
                                 </tr>
-                                <tr>
+                                <tr v-for="author in paper.authors" :key="author.id">
                                     <td>author</td>
-                                    <td>name of author</td>
-                                </tr>
-                                <tr>
-                                    <td>author</td>
-                                    <td>name of author</td>
+                                    <td>{{author.user.name}}</td>
                                 </tr>
                             </tbody>
                         </v-simple-table>
                         <v-divider></v-divider>
 
                         <v-card-subtitle class="text-h6">The abstract :</v-card-subtitle>
-                        <v-card-text>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates fuga esse necessitatibus commodi quaerat, temporibus debitis eligendi, laudantium voluptatem eius, laboriosam consectetur minus eum maxime eaque tempore repellendus molestiae ratione.
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non earum soluta, placeat sint beatae autem possimus praesentium pariatur! Esse voluptas amet suscipit placeat deleniti quibusdam necessitatibus rerum exercitationem officiis ex. Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit pariatur cumque officiis ullam voluptate, quas omnis, velit dolor impedit fuga veniam, explicabo eius laborum minus! Vero nisi consequuntur ullam nesciunt.
-                        </v-card-text>
+                        <v-card-text>{{ paper.abstract }}</v-card-text>
 
                     </v-card>
                 </article>
@@ -50,11 +43,48 @@
 </template>
 
 <script>
-export default {
+import PaperService from '@/services/PaperService';
 
+
+
+export default {
+    props: ['id'],
+    data(){
+        return {
+            paper : null,
+            loading : false,
+            error : null,
+        };
+    },
+
+    created(){
+        this.fetchPaper();
+    },
+
+    watch : {
+        '$route' : 'fetchPaper',
+    },
+
+    methods : {
+        async fetchPaper(){
+            this.error = false;
+            this.paper = null;
+            this.loading = true;
+            
+            try {
+                const { data } = await PaperService.show(this.id);
+                this.error = null;
+                this.loading = false;
+                this.paper = data;
+            } catch (error) {
+                this.loading = false;
+                this.paper = null;
+                this.error = error.response.data;
+            }
+                
+
+        },
+
+    },
 }
 </script>
-
-<style>
-
-</style>

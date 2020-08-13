@@ -68,7 +68,7 @@ class PaperController extends Controller
      */
     public function show(Paper $paper)
     {
-        //
+        return response()->json($paper);
     }
 
     /**

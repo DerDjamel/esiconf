@@ -8,6 +8,8 @@ class Paper extends Model
 {
     protected $guarded = [];
 
+    protected $with = ['conference', 'authors'];
+
     public function authors(){
         return $this->hasMany('App\Author');
     }
