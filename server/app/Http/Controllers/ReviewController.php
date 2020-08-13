@@ -60,7 +60,7 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        //
+        return response()->json($review);
     }
 
 

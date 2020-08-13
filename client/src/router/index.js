@@ -66,17 +66,18 @@ Vue.use(VueRouter)
       }
     },
     {
-      path: '/review',
-      name: 'SingleReview',
-      component: SingleReview,
+      path: '/review/create',
+      name: 'ReviewForm',
+      component: ReviewForm,
       meta : {
         middleware : [auth, authCheck]
       }
     },
     {
-      path: '/review/create',
-      name: 'ReviewForm',
-      component: ReviewForm,
+      props: true,
+      path: '/review/:id',
+      name: 'SingleReview',
+      component: SingleReview,
       meta : {
         middleware : [auth, authCheck]
       }

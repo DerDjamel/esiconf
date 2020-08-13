@@ -21,4 +21,5 @@ Route::post('bid/{paper}', 'BidController@store');
 
 
 Route::post('review/paper/{paper}', 'ReviewController@store');
+Route::get('review/{review}', 'ReviewController@show');
 Route::put('review/{review}/paper/{paper}', 'ReviewController@update');
