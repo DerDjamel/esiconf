@@ -1,6 +1,6 @@
 <template>
   <v-container>
-      <v-row>
+      <v-row v-if="editMode == false">
           <v-col cols="8">
               <v-card outlined tag="article">
                 <v-card-title> {{ conference.name }} </v-card-title>
@@ -53,6 +53,16 @@
                     </div>
                 </v-card>
             </section>
+
+            <section v-if="isChair == true">
+                <v-card outlined class="mt-2 pa-2">
+                    <v-card-actions>
+                        <v-btn color="primary" @click.stop="editMode = !editMode" tile class="mr-2"> <v-icon left>mdi-pencil</v-icon> Edit Conference</v-btn>
+
+                        <v-btn color="red" dark @click.stop="" tile> <v-icon left>mdi-trash-can-outline</v-icon> Delete Conference</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </section>
           </v-col>
 
           <v-col cols="3">
@@ -70,16 +80,18 @@
               </v-card>
           </v-col>
       </v-row>
+      <EditConference :conference="conference" v-if="editMode == true" @closeEditMode="closeedit"></EditConference>
   </v-container>
 </template>
 
 <script>
 import ConferenceService from '@/services/ConferenceService';
-
+import EditConference from '@/components/conference/edit-conference.vue';
 
 
 export default {
     props: ['slug'],
+    components: {EditConference},
     data(){
         return {
             side_menu : [
@@ -92,11 +104,11 @@ export default {
             conference : null,
             loading : false,
             error : null,
+            editMode: false,
         };
     },
 
     computed : {
-
         isChair: function () { return this.$store.getters['auth/user'].id === this.conference.chair.id; }
     },
 
@@ -127,6 +139,11 @@ export default {
                 
 
         },
+
+        closeedit(conference){
+            this.conference = conference;
+            this.editMode = false;
+        }
 
     },
 }

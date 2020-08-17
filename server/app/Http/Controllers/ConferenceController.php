@@ -67,7 +67,7 @@ class ConferenceController extends Controller
         $conference->update($request->all());
 
         return response()->json([
-            'conference'    => $conference,
+            'conference'    => new ConferenceResource($conference),
             'message'       => 'Conference has been updated'
         ]);
     }

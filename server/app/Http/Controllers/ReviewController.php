@@ -38,9 +38,16 @@ class ReviewController extends Controller
             return response()->json(['message' => 'You are not a Reviewer of this Paper'], 403);
         }
 
+        $reviewer_id = Review::where('paper_id', $paper->id)->first() ? 
+                        Review::where('paper_id', $paper->id)->first()->reviewer_id : null;
+        // make sure he does not have a review for this paper
+        if (Reviewer::where('user_id', auth()->id())->first()->id === $reviewer_id) {
+            return response()->json(['message' => 'You already have a Review for this Paper']);
+        }
+
         // now the user is authenticated and is a reviewer of the paper
         // we can add the review to the database
-        Review::firstOrCreate([
+        $review = Review::firstOrCreate([
             'opinion'       => $request->opinion,
             'comment'       => $request->comment,
             'reviewer_id'   => Reviewer::where('user_id', auth()->id())->get()[0]->id,
@@ -48,6 +55,7 @@ class ReviewController extends Controller
         ]);
 
         return response()->json([
+            'review_id' => $review->id,
             'message' => 'Your Review has been submitted'
         ], 200);
     }

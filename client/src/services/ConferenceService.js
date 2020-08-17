@@ -9,4 +9,9 @@ export default {
     create(info){
         return api.post(`/conference/`, info);
     },
+
+    update(info){
+        return api.put(`/conference/${info.slug}`, info);
+    },
+
 }

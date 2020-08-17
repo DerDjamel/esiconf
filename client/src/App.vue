@@ -103,7 +103,7 @@
 
       <v-tooltip color="primary" bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn icon class="mr-1" v-on="on" v-bind="attrs"> 
+          <v-btn icon class="mr-1" v-on="on" v-bind="attrs" to="/conference/create"> 
             <v-icon>mdi-plus</v-icon>
           </v-btn>  
         </template>

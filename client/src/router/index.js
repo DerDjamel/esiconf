@@ -66,7 +66,8 @@ Vue.use(VueRouter)
       }
     },
     {
-      path: '/review/create',
+      props: true,
+      path: '/review/create/paper/:id',
       name: 'ReviewForm',
       component: ReviewForm,
       meta : {
@@ -83,7 +84,8 @@ Vue.use(VueRouter)
       }
     },
     {
-      path: '/paper/create',
+      props: true,
+      path: '/paper/create/conference/:slug',
       name: 'PaperForm',
       component: PaperForm,
       meta : {
