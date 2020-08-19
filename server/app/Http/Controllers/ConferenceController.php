@@ -6,6 +6,8 @@ use App\Conference;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreConference;
 use App\Http\Resources\Conference as ConferenceResource;
+use App\Http\Resources\Review as ReviewResource;
+use App\Http\Resources\Paper as PaperResource;
 use App\Http\Resources\ConferenceCollection;
 
 class ConferenceController extends Controller
@@ -104,5 +106,18 @@ class ConferenceController extends Controller
             $conference->update(['paper_bidding' => 'open']) : $conference->update(['paper_bidding' => 'closed']);
 
         return response()->json([ 'message' => 'Your conference status has been updated']);
+    }
+
+
+    public function conference_reviews(Conference $conference){
+        $this->authorize('conference_reviews', $conference);
+        
+        return response()->json(ReviewResource::collection($conference->reviews));
+    }
+
+    public function conference_papers(Conference $conference){
+        $this->authorize('conference_papers', $conference);
+        
+        return response()->json(PaperResource::collection($conference->papers));
     }
 }

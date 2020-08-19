@@ -44,4 +44,14 @@ class ConferencePolicy
         return $user->id === $conference->user_id;
     }
 
+    public function conference_reviews(User $user, Conference $conference)
+    {
+        return $user->id === $conference->user_id;
+    }
+
+    public function conference_papers(User $user, Conference $conference)
+    {
+        return $user->id === $conference->user_id;
+    }
+
 }

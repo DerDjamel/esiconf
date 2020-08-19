@@ -40,8 +40,6 @@
 <script>
 import ReviewService from '@/services/ReviewService';
 
-
-
 export default {
     props: ['id'],
     data(){

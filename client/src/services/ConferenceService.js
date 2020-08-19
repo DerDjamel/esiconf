@@ -14,4 +14,12 @@ export default {
         return api.put(`/conference/${info.slug}`, info);
     },
 
+    reviews(slug){
+        return api.get(`/conference/${slug}/reviews`);
+    },
+
+    papers(slug){
+        return api.get(`/conference/${slug}/papers`);
+    },
+
 }
