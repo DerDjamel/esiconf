@@ -14,6 +14,7 @@ Route::group(['prefix' => 'auth'], function ($router) {
 Route::apiResource('conference', 'ConferenceController');
 Route::get('conference/{conference}/reviews', 'ConferenceController@conference_reviews');
 Route::get('conference/{conference}/papers', 'ConferenceController@conference_papers');
+Route::get('conference/{conference}/bids', 'ConferenceController@conference_bids');
 Route::put('conference/{conference}/submissionStatus', 'ConferenceController@submissionStatus');
 Route::put('conference/{conference}/biddingStatus', 'ConferenceController@biddingStatus');
 

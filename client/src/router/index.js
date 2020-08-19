@@ -15,6 +15,7 @@ import ReviewForm from '@/components/review/review-form.vue';
 import PaperForm from '@/components/paper/paper-form.vue';
 import ListPapers from '@/components/paper/list-papers.vue';
 import ListReviews from '@/components/review/list-reviews.vue';
+import ListBids from '@/components/bid/list-bids.vue';
 
 // middlewares
 import guest from '@/middlewares/guest';
@@ -79,6 +80,15 @@ Vue.use(VueRouter)
       path: '/conference/:slug/reviews',
       name: 'ConferenceReviews',
       component: ListReviews,
+      props : true,
+      meta : {
+        middleware : [auth, authCheck]
+      }
+    },
+    {
+      path: '/conference/:slug/bids',
+      name: 'ConferenceBids',
+      component: ListBids,
       props : true,
       meta : {
         middleware : [auth, authCheck]

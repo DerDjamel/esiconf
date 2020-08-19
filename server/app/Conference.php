@@ -29,6 +29,11 @@ class Conference extends Model
         return $this->hasManyThrough('App\Review', 'App\Paper', 'conference_id', 'paper_id');
     }
 
+    public function bids()
+    {
+        return $this->hasManyThrough('App\Bid', 'App\Paper', 'conference_id', 'paper_id');
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

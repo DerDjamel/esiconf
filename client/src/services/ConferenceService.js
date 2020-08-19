@@ -22,4 +22,8 @@ export default {
         return api.get(`/conference/${slug}/papers`);
     },
 
+    bids(slug){
+        return api.get(`/conference/${slug}/bids`);
+    },
+
 }
