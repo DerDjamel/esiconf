@@ -14,8 +14,11 @@ import ConferenceForm from '@/components/conference/conference-form.vue';
 import ReviewForm from '@/components/review/review-form.vue';
 import PaperForm from '@/components/paper/paper-form.vue';
 import ListPapers from '@/components/paper/list-papers.vue';
+import ListUserPapers from '@/components/paper/list-user-papers.vue';
 import ListReviews from '@/components/review/list-reviews.vue';
+import ListUserReviews from '@/components/review/list-user-reviews.vue';
 import ListBids from '@/components/bid/list-bids.vue';
+import ListUserBids from '@/components/bid/list-user-bids.vue';
 
 // middlewares
 import guest from '@/middlewares/guest';
@@ -40,6 +43,33 @@ Vue.use(VueRouter)
       component: Login,
       meta : {
         middleware : [guest]
+      }
+    },
+    {
+      path: '/my-papers',
+      name: 'MyPapers',
+      component: ListUserPapers,
+      props : true,
+      meta : {
+        middleware : [auth, authCheck]
+      }
+    },
+    {
+      path: '/my-reviews',
+      name: 'MyReviews',
+      component: ListUserReviews,
+      props : true,
+      meta : {
+        middleware : [auth, authCheck]
+      }
+    },
+    {
+      path: '/my-bids',
+      name: 'MyBids',
+      component: ListUserBids,
+      props : true,
+      meta : {
+        middleware : [auth, authCheck]
       }
     },
     {

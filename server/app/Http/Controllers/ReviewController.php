@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Review;
 use App\Reviewer;
 use App\Paper;
+use App\Http\Resources\Review as ReviewResource;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -109,4 +110,9 @@ class ReviewController extends Controller
     {
         //
     }
+
+    public function user_reviews()
+    {
+        return response()->json(ReviewResource::collection(auth()->user()->reviews));
+    } 
 }

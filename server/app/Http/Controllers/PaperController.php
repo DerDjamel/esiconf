@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Paper;
 use App\Author;
+use App\Http\Resources\Paper as PaperResource;
 use Illuminate\Http\Request;
 
 class PaperController extends Controller
@@ -92,5 +93,10 @@ class PaperController extends Controller
         return response()->json([
             'error' => 'You are not an Author of the Paper or the Chair of the Conference'
         ]);
+    }
+
+    public function user_papers()
+    {
+        return response()->json(PaperResource::collection(auth()->user()->papers));
     }
 }

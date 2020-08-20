@@ -14,4 +14,9 @@ class Author extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function papers()
+    {
+        return $this->belongsTo('App\Paper');
+    }
 }

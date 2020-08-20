@@ -18,11 +18,15 @@ Route::get('conference/{conference}/bids', 'ConferenceController@conference_bids
 Route::put('conference/{conference}/submissionStatus', 'ConferenceController@submissionStatus');
 Route::put('conference/{conference}/biddingStatus', 'ConferenceController@biddingStatus');
 
+
+Route::get('user/paper', 'PaperController@user_papers');
 Route::apiResource('paper', 'PaperController');
 
-Route::post('bid/{paper}', 'BidController@store');
 
+Route::post('bid/{paper}', 'BidController@store');
+Route::get('user/bids', 'BidController@user_bids');
 
 Route::post('review/paper/{paper}', 'ReviewController@store');
 Route::get('review/{review}', 'ReviewController@show');
 Route::put('review/{review}/paper/{paper}', 'ReviewController@update');
+Route::get('user/reviews', 'ReviewController@user_reviews');

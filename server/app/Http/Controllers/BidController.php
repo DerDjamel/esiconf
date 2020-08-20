@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bid;
 use App\Paper;
 use App\Reviewer;
+use App\Http\Resources\Bid as BidResource;
 use Illuminate\Http\Request;
 
 class BidController extends Controller
@@ -85,5 +86,10 @@ class BidController extends Controller
     public function destroy(Bid $bid)
     {
         //
+    }
+
+    public function user_bids()
+    {
+        return response()->json(BidResource::collection(auth()->user()->bids));
     }
 }

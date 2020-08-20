@@ -9,4 +9,8 @@ export default {
     store(info){
         return api.post(`/paper/`, info);
     },
+
+    user_papers(){
+        return api.get(`/user/paper`);
+    },
 }
