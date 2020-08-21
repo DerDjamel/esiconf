@@ -127,4 +127,8 @@ class ConferenceController extends Controller
         
         return response()->json(BidResource::collection($conference->bids));
     }
+
+    public function user_conferences(){        
+        return response()->json(ConferenceResource::collection(auth()->user()->conferences));
+    }
 }

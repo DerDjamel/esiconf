@@ -26,4 +26,8 @@ export default {
         return api.get(`/conference/${slug}/bids`);
     },
 
+    user_conferences(){
+        return api.get(`/user/conferences`);
+    },
+
 }

@@ -7,7 +7,7 @@ export default {
     },
 
     store(info){
-        return api.post(`/paper/`, info);
+        return api.post(`/paper/`, info, { 'content-type': 'application/x-www-form-urlencoded' },);
     },
 
     user_papers(){

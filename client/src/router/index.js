@@ -7,6 +7,7 @@ import store from '@/store';
 import Home from '@/views/Home.vue'
 import Login from '@/views/auth/Login.vue'
 import ListConferences from '@/views/conference/list-conferences.vue';
+import ListUserConferences from '@/components/conference/list-user-conferences.vue';
 import SingleConference from '@/views/conference/single-conference.vue';
 import SingleReview from '@/views/review/single-review.vue';
 import SinglePaper from '@/views/paper/single-paper.vue';
@@ -67,6 +68,15 @@ Vue.use(VueRouter)
       path: '/my-bids',
       name: 'MyBids',
       component: ListUserBids,
+      props : true,
+      meta : {
+        middleware : [auth, authCheck]
+      }
+    },
+    {
+      path: '/my-conferences',
+      name: 'MyConferences',
+      component: ListUserConferences,
       props : true,
       meta : {
         middleware : [auth, authCheck]

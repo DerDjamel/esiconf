@@ -24,6 +24,15 @@
                 ></v-textarea>
               </v-col>
 
+              <v-col cols="10">
+                <v-text-field
+                  label="author :"
+                  placeholder="email of author"
+                  v-model="author"
+                  type='email'
+                ></v-text-field>
+              </v-col>
+
               <v-col cols="12">
                 <v-textarea
                   outlined
@@ -64,6 +73,7 @@ export default {
     abstract: null,
     comment: null,
     paper: null,
+    author: null,
   }),
 
   created(){
@@ -94,6 +104,22 @@ export default {
 
     async submitPaper(){
       try {
+        const paper_data = new FormData();
+        paper_data.append('paper', this.paper);
+        paper_data.append('abstract', this.abstract);
+        paper_data.append('comment', this.comment);
+        paper_data.append('title', this.title);
+        paper_data.append('author[]', this.author);
+        paper_data.append('conference_id', this.conference.id);
+
+        const {data} = await PaperService.store(paper_data);
+        console.log(data);
+        /*
+        product_id_list.forEach((item) => {
+          bodyFormData.append('product_id_list[]', item);
+        });*/
+
+        /*
         const { data } = await PaperService.store({
           title : this.title,
           abstract: this.abstract,
@@ -101,13 +127,13 @@ export default {
           conference_id : this.conference.id,
           author: 1,
           paper: this.paper,
-        }); // and of request
+        },); // and of request
 
         this.error = null;
         console.log(data);
 
         // this.$router.push({ path : `/conference/${data.conference.slug}` });
-
+        */
       } catch (error) {
         console.log(error);
       }
