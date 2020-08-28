@@ -21,7 +21,9 @@ Route::put('conference/{conference}/biddingStatus', 'ConferenceController@biddin
 
 
 Route::get('user/paper', 'PaperController@user_papers');
+Route::get('paper/download/{paper}', 'PaperController@download');
 Route::apiResource('paper', 'PaperController');
+
 
 
 Route::post('bid/{paper}', 'BidController@store');

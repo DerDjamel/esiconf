@@ -13,4 +13,8 @@ export default {
     user_papers(){
         return api.get(`/user/paper`);
     },
+
+    download(id){
+        return api.get(`/paper/download/${id}`, {responseType: 'arraybuffer'});
+    }
 }

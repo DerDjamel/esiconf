@@ -119,21 +119,6 @@ export default {
           bodyFormData.append('product_id_list[]', item);
         });*/
 
-        /*
-        const { data } = await PaperService.store({
-          title : this.title,
-          abstract: this.abstract,
-          comment : this.comment,
-          conference_id : this.conference.id,
-          author: 1,
-          paper: this.paper,
-        },); // and of request
-
-        this.error = null;
-        console.log(data);
-
-        // this.$router.push({ path : `/conference/${data.conference.slug}` });
-        */
       } catch (error) {
         console.log(error);
       }

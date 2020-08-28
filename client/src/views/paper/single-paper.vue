@@ -35,6 +35,10 @@
                         <v-card-subtitle class="text-h6">The abstract :</v-card-subtitle>
                         <v-card-text>{{ paper.abstract }}</v-card-text>
 
+                        <v-card-actions>
+                            <DownloadButton :id='paper.id' :paper_name='paper_name'></DownloadButton>
+                        </v-card-actions>
+
                     </v-card>
                 </article>
             </v-col>
@@ -44,17 +48,24 @@
 
 <script>
 import PaperService from '@/services/PaperService';
-
+import DownloadButton from '@/components/paper/download-btn.vue';
 
 
 export default {
     props: ['id'],
+    components : {DownloadButton},
     data(){
         return {
             paper : null,
             loading : false,
             error : null,
         };
+    },
+
+    computed : {
+        paper_name(){
+            return this.paper.path.slice(7);
+        }
     },
 
     created(){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Paper;
 use App\Author;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Paper as PaperResource;
 use Illuminate\Http\Request;
 
@@ -98,5 +99,10 @@ class PaperController extends Controller
     public function user_papers()
     {
         return response()->json(PaperResource::collection(auth()->user()->papers));
+    }
+
+    public function download(Paper $paper)
+    {
+        return Storage::download($paper->path);
     }
 }
