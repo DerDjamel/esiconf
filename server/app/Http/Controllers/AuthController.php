@@ -15,7 +15,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     /**
@@ -34,6 +34,35 @@ class AuthController extends Controller
         }
 
         return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
+    /**
+     * Register a new user
+     */
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name'          => 'required|min:3',
+            'country'       => 'required',
+            'organization'  => 'required',
+            'job'           => 'required',
+            'email'         => 'required|email|unique:users',
+            'password'      => 'required|min:3',
+            'photo'         => 'required|file|image|between:1,20000'
+        ]);
+        
+        $path = $request->photo->store('photos');
+        
+
+        $user = new User();
+        $user->name         = $request->name;
+        $user->email        = $request->email;
+        $user->job          = $request->job;
+        $user->organization = $request->organization;
+        $user->country      = $request->country;
+        $user->password     = bcrypt($request->password);
+        $user->save();
+        return response()->json(['status' => 'success'], 200);
     }
 
     /**

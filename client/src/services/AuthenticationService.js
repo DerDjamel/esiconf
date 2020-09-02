@@ -3,6 +3,7 @@ import api from './api';
 
 const endpoints = {
     login   : '/auth/login',
+    register   : '/auth/register',
     logout  : '/auth/logout',
     refresh : '/auth/refresh',
     user    : '/auth/me'
@@ -10,6 +11,10 @@ const endpoints = {
 
 export default {
     login(credentials){
+        return api.post(endpoints.login, credentials);
+    },
+
+    register(credentials){
         return api.post(endpoints.login, credentials);
     },
 

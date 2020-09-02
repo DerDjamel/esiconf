@@ -5,7 +5,8 @@ import store from '@/store';
 
 // views
 import Home from '@/views/Home.vue'
-import Login from '@/views/auth/Login.vue'
+import Login from '@/views/auth/Login.vue';
+import Register from '@/views/auth/Register.vue'
 import ListConferences from '@/views/conference/list-conferences.vue';
 import ListUserConferences from '@/components/conference/list-user-conferences.vue';
 import SingleConference from '@/views/conference/single-conference.vue';
@@ -20,6 +21,7 @@ import ListReviews from '@/components/review/list-reviews.vue';
 import ListUserReviews from '@/components/review/list-user-reviews.vue';
 import ListBids from '@/components/bid/list-bids.vue';
 import ListUserBids from '@/components/bid/list-user-bids.vue';
+//import ProfileCard from '@/components/profile/profile-card.vue';
 
 // middlewares
 import guest from '@/middlewares/guest';
@@ -42,6 +44,14 @@ Vue.use(VueRouter)
       path: '/login',
       name: 'Login',
       component: Login,
+      meta : {
+        middleware : [guest]
+      }
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register,
       meta : {
         middleware : [guest]
       }
