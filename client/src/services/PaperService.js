@@ -25,4 +25,8 @@ export default {
     reject_paper(id){
         return api.post(`/paper/${id}/reject`);
     },
+
+    assign_reviewers(id, reviewers){
+        return api.post(`/paper/${id}/assign`, reviewers);
+    },
 }

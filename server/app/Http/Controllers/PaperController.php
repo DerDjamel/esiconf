@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Paper;
 use App\Author;
+use App\Reviewer;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Paper as PaperResource;
 use Illuminate\Http\Request;
@@ -118,5 +119,32 @@ class PaperController extends Controller
         if ($paper->status === 'rejected') return response()->json(['status' => 'OK', 200]);
         $paper->update(['status' => 'rejected']);
         return response()->json([ 'message' => 'Your Paper status has been updated (Rejected)']);
+    }
+
+
+
+    public function assign_reviewers(Request $request, Paper $paper){        
+        $reviewers = Reviewer::find($request->ids);
+        
+        foreach($reviewers as $reviewer){
+
+            // if he is already a reviwer of the paper then just continue
+            if($reviewer->paper_id == $paper->id && $reviewer->conference_id == $paper->conference->id) continue;
+
+            if($reviewer->paper_id == null && $reviewer->conference_id == $paper->conference->id) {
+                $reviewer->paper_id = $paper->id;
+                $reviewer->save();
+            }
+            else {
+                Reviewer::firstOrCreate([
+                    'user_id' => $reviewer->user_id,
+                    'conference_id' => $reviewer->conference_id,
+                    'paper_id' => $paper->id
+                ]);
+            }
+        }
+
+        return response()->json(['message' => 'All Reviwer have been assigned to the Paper'], 200);
+
     }
 }

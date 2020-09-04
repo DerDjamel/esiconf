@@ -18,6 +18,10 @@ export default {
         return api.get(`/conference/${slug}/reviews`);
     },
 
+    reviewers(slug){
+        return api.get(`/conference/${slug}/reviewers`);
+    },
+
     papers(slug){
         return api.get(`/conference/${slug}/papers`);
     },

@@ -15,6 +15,7 @@ Route::group(['prefix' => 'auth'], function ($router) {
 Route::apiResource('conference', 'ConferenceController');
 Route::get('user/conferences', 'ConferenceController@user_conferences');
 Route::get('conference/{conference}/reviews', 'ConferenceController@conference_reviews');
+Route::get('conference/{conference}/reviewers', 'ConferenceController@conference_reviewers');
 Route::get('conference/{conference}/papers', 'ConferenceController@conference_papers');
 Route::get('conference/{conference}/bids', 'ConferenceController@conference_bids');
 Route::put('conference/{conference}/submissionStatus', 'ConferenceController@submissionStatus');
@@ -25,6 +26,7 @@ Route::get('user/paper', 'PaperController@user_papers');
 Route::get('paper/download/{paper}', 'PaperController@download');
 Route::post('paper/{paper}/accept', 'PaperController@accept_paper');
 Route::post('paper/{paper}/reject', 'PaperController@reject_paper');
+Route::post('paper/{paper}/assign', 'PaperController@assign_reviewers');
 Route::apiResource('paper', 'PaperController');
 
 
