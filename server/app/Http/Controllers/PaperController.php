@@ -105,4 +105,18 @@ class PaperController extends Controller
     {
         return Storage::download($paper->path);
     }
+
+    public function accept_paper(Paper $paper)
+    {
+        if ($paper->status === 'accepted') return response()->json(['status' => 'OK', 200]);
+        $paper->update(['status' => 'accepted']);
+        return response()->json([ 'message' => 'Your Paper status has been updated (Accepted)']);
+    }
+
+    public function reject_paper(Paper $paper)
+    {
+        if ($paper->status === 'rejected') return response()->json(['status' => 'OK', 200]);
+        $paper->update(['status' => 'rejected']);
+        return response()->json([ 'message' => 'Your Paper status has been updated (Rejected)']);
+    }
 }

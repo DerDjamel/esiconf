@@ -23,6 +23,8 @@ Route::put('conference/{conference}/biddingStatus', 'ConferenceController@biddin
 
 Route::get('user/paper', 'PaperController@user_papers');
 Route::get('paper/download/{paper}', 'PaperController@download');
+Route::post('paper/{paper}/accept', 'PaperController@accept_paper');
+Route::post('paper/{paper}/reject', 'PaperController@reject_paper');
 Route::apiResource('paper', 'PaperController');
 
 

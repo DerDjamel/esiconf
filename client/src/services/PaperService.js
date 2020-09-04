@@ -16,5 +16,13 @@ export default {
 
     download(id){
         return api.get(`/paper/download/${id}`, {responseType: 'arraybuffer'});
-    }
+    },
+
+    accept_paper(id){
+        return api.post(`/paper/${id}/accept`);
+    },
+
+    reject_paper(id){
+        return api.post(`/paper/${id}/reject`);
+    },
 }
