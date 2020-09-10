@@ -135,6 +135,7 @@
     <!-- Main Content -->
     <v-main>
       <router-view></router-view>
+      <v-btn @click="send">clikc</v-btn>
     </v-main>
 
 
@@ -143,7 +144,8 @@
 </template>
 
 <script>
-
+import api from '@/services/api';
+import Echo from './Echo';
 
 export default {
   name: 'App',
@@ -166,6 +168,21 @@ export default {
       {icon : 'mdi-file-find', text: 'My Reviews',},
       {icon : 'mdi-gavel', text: 'My Bids',},
     ],
-  }),
+  }), // end of data
+
+  methods : {
+    listen(){
+      Echo.channel('channel').listen('App\\Events\\testEvent' , (payload) => {
+        console.log('this is the payload : ' + payload);
+      });
+    },
+    send(){
+      api.get('/conferences/event').then( () => { console.log('request send'); } );
+    }
+  },
+
+  mounted(){
+    this.listen();
+  }
 };
 </script>

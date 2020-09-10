@@ -12,6 +12,8 @@ use App\Http\Resources\Paper as PaperResource;
 use App\Http\Resources\Bid as BidResource;
 use App\Http\Resources\ConferenceCollection;
 
+
+use App\Events\testEvent;
 class ConferenceController extends Controller
 {
 
@@ -139,5 +141,11 @@ class ConferenceController extends Controller
         return response()->json(ReviewerResource::collection($conference->reviewers()->get()->unique(function($reviewer){
             return $reviewer['user_id'] . $reviewer['conference_id'];
         })));
+    }
+
+
+    public function testevent(){
+        event(new testEvent());
+        return response()->json();
     }
 }

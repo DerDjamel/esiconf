@@ -40,14 +40,19 @@ class BidController extends Controller
             return response()->json(['message' => 'You are not a reviewer for this Conference']);
         }
 
-        $reviewer = Reviewer::where('user_id', auth()->id())->get();
+        $reviewer = Reviewer::where('user_id', auth()->id())->where('paper_id', $paper->id)->first();
 
-        Bid::firstOrCreate([
-            'intrest_level' => $request->intrest_level,
-            'reviewer_id'   => $reviewer[0]->id,
-            'paper_id'      => $paper->id
-        ]);
-
+        //if it already exists , update it
+        if($bid = Bid::where('paper_id', $paper->id)->where('reviewer_id', $reviewer->id)->first()){
+            $bid->update(['intrest_level' => $request->intrest_level,]);
+        }else{
+            // if not create one
+            Bid::firstOrCreate([
+                'intrest_level' => $request->intrest_level,
+                'reviewer_id'   => $reviewer->id,
+                'paper_id'      => $paper->id
+            ]);
+        }
         return response()->json([
             'message' => 'Your Bid has been submitted'
         ]);
