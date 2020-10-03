@@ -35,6 +35,10 @@ class testEvent implements ShouldBroadcastNow
         return new Channel('channel');
     }
 
+    public function broadcastAs(){
+        return 'TestEvent';
+    }
+
     public function broadcastWith(){
         return [
             'key' => 'value'

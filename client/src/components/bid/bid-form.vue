@@ -45,7 +45,7 @@ import BidService from '@/services/BidService';
 export default {
     data(){
         return {
-            dialog: true,
+            dialog: false,
             loading: false,
             error: null,
             thebid: null,
