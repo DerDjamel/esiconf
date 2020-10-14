@@ -1,24 +1,24 @@
 <template>
   <article class="mini-conference">
-      <v-card max-width="400px" outlined>
+      <v-card max-width="560px" min-height="200px" outlined>
           <!-- Confernce Name -->
           <v-card-title>
-              This is a title of a conference
+              {{ conference.name }}
           </v-card-title>
 
           <v-divider></v-divider>
           <!-- Conference Description -->
           <v-card-text>
               <section class="conference-description pb-2">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut possimus dolor, asperiores vitae impedit voluptate id tenetur alias aspernatur ex soluta? Obcaecati veniam atque natus repellat voluptatem nulla, sunt quibusdam.
+                  {{ conference_description }}
               </section>
               <v-divider></v-divider>
               <section class="conference-dates mt-2 d-flex justify-start align-center">
                   <div class="mr-2">
-                      <span class="font-weight-bold">start</span> : <v-chip class="pa-2" label small>2020-05-16</v-chip>
+                      <span class="font-weight-bold">start</span> : <v-chip class="pa-2" label small> {{ conference.start }} </v-chip>
                   </div>
                   <div>
-                      <span class="font-weight-bold ml-2">end</span> : <v-chip class="pa-2" label small>2020-05-16</v-chip> 
+                      <span class="font-weight-bold ml-2">end</span> : <v-chip class="pa-2" label small> {{ conference.end }} </v-chip> 
                   </div>
               </section>
           </v-card-text>
@@ -28,7 +28,12 @@
 
 <script>
 export default {
-
+    props : ['conference'],
+    computed: {
+        conference_description(){
+            return this.conference.description.substr(0, 200) + "...";
+        }
+    }
 }
 </script>
 

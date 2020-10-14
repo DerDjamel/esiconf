@@ -2,6 +2,12 @@ import api from './api';
 
 
 export default {
+    index(){
+        return api.get('/conference');
+    },
+    index_page(page){
+        return api.get('/conference?page=' + page);
+    },
     show(slug){
         return api.get(`/conference/${slug}`);
     },
