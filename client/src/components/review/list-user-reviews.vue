@@ -1,5 +1,15 @@
 <template>
   <v-container fluid style="overflow: auto">
+      <v-alert
+        border="left"
+        colored-border
+        type="error"
+        elevation="2"
+        dense
+        v-if="error"
+        >
+            Oops ! something went wrong, try again !
+        </v-alert>
       <v-row class="justify-center align-center">
           <v-col cols="12">
               <v-card outlined>
@@ -12,7 +22,11 @@
                     :items="reviews"
                     :items-per-page="10"
                     class="elevation-1"
-                ></v-data-table>
+                >
+                    <template v-slot:no-data>
+                        <span class="font-weight-bold">You have no Reviews !</span>
+                    </template>
+                </v-data-table>
 
               </v-card>
           </v-col>

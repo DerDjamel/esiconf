@@ -43,7 +43,7 @@ class ReviewController extends Controller
                         Review::where('paper_id', $paper->id)->first()->reviewer_id : null;
         // make sure he does not have a review for this paper
         if (Reviewer::where('user_id', auth()->id())->first()->id === $reviewer_id) {
-            return response()->json(['message' => 'You already have a Review for this Paper']);
+            return response()->json(['message' => 'You already have a Review for this Paper'], 401);
         }
 
         // now the user is authenticated and is a reviewer of the paper
@@ -96,6 +96,7 @@ class ReviewController extends Controller
         ]);
 
         return response()->json([
+            'review' => Review::find($review->id),
             'message' => 'Your Review has been Updated'
         ], 200);
     }
@@ -108,7 +109,13 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        //
+        if(Reviewer::find($review->reviewer_id)->user_id != auth()->id())
+            return response()->json(['message' => 'You are not a Reviewer of this Paper'], 403);
+
+        $review->delete();
+        return response()->json([
+            'message' => 'Your Review has been Deleted'
+        ], 200);
     }
 
     public function user_reviews()

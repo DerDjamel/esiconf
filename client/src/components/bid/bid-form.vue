@@ -34,7 +34,7 @@
         <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="red" tile outlined @click="dialog = false">Close</v-btn>
-            <v-btn color="primary" tile outlined @click="bid(23)">Save</v-btn>
+            <v-btn color="primary" tile outlined @click="bid(paper_id)">Save</v-btn>
         </v-card-actions>
     </v-card>
     </v-dialog>
@@ -43,6 +43,7 @@
 <script>
 import BidService from '@/services/BidService';
 export default {
+    props: ['paper_id'],
     data(){
         return {
             dialog: false,

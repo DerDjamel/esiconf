@@ -33,23 +33,23 @@
 
 
               <v-col cols="6">
-                <v-select
+                <v-autocomplete
                   dense
                   :items="countries"
                   label="Country"
                   outlined
                   v-model="country"
-                ></v-select>
+                ></v-autocomplete>
               </v-col>
 
               <v-col cols="6">
-                <v-select
+                <v-autocomplete
                   dense
-                  :items="countries"
+                  :items="cities"
                   label="City"
                   outlined
                   v-model="city"
-                ></v-select>
+                ></v-autocomplete>
               </v-col>
 
               <v-col cols="10">
@@ -90,11 +90,13 @@
 
 <script>
 import ConferenceService from '@/services/ConferenceService';
-
+import countries from '@/utils/data/countries';
+import cities from '@/utils/data/cities';
 
 export default {
   data: () => ({
-    countries : ['country', 'country', 'country', 'country',],
+    countries : countries,
+    cities: cities,
     name: null,
     description: null,
     country: null,

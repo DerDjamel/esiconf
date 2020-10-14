@@ -1,17 +1,30 @@
 <template>
   <v-container fluid style="overflow: auto">
-      <v-row class="justify-center align-center">
+      <v-alert
+        border="left"
+        colored-border
+        type="error"
+        elevation="2"
+        dense
+        v-if="error"
+        >
+            Oops ! something went wrong, try again !
+        </v-alert>
+      <v-row v-else class="justify-center align-center">
           <v-col cols="12">
-              <v-card outlined>
-                <v-card-title class="my-n2">Papers of the conference :  {{ conference.name }} </v-card-title>
+              <v-card outlined :loading="loading">
+                <v-card-title class="my-n2">
+                    Papers of the conference :  {{ conference.name }} 
+                    </v-card-title>
                 <v-divider></v-divider>
-                <v-data-table
+                <v-data-table v-if="papers"
                     show-expand
                     fixed-header
                     :headers="headers"
                     :items="papers"
                     :items-per-page="10"
                     class="elevation-1"
+                    :search="search"
                 >
                     <template v-slot:expanded-item="{ headers, item }">
                         <td :colspan="headers.length">
@@ -42,6 +55,9 @@
                             </v-dialog>
                         </td>
                     </template>
+                    <template v-slot:no-data>
+                        <span class="font-weight-bold">There are no Papers !</span>
+                    </template>
                 </v-data-table>
 
               </v-card>
@@ -57,6 +73,7 @@ export default {
     props: ['slug'],
     data(){
         return {
+            search : '',
             dialog: false,
             selected_reviewers : [],
             conference : null,
@@ -91,6 +108,8 @@ export default {
                 },
             ], // end of headers
             papers : [],
+            loading: false,
+            error : null
         }
     }, // end of data
 

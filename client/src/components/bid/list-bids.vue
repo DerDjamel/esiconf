@@ -1,11 +1,21 @@
 <template>
   <v-container fluid style="overflow: auto">
-      <v-row class="justify-center align-center">
+      <v-alert
+        border="left"
+        colored-border
+        type="error"
+        elevation="2"
+        dense
+        v-if="error"
+        >
+            Oops ! something went wrong, try again !
+        </v-alert>
+      <v-row v-else class="justify-center align-center">
           <v-col cols="12">
-              <v-card outlined>
+              <v-card :loading="loading" outlined>
                 <v-card-title class="my-n2">Papers of the conference :  {{ conference.name }} </v-card-title>
                 <v-divider></v-divider>
-                <v-data-table
+                <v-data-table v-if="bids"
                     dense
                     fixed-header
                     :headers="headers"
@@ -52,6 +62,8 @@ export default {
                 },
             ], // end of headers
             bids : [],
+            loading: false,
+            error: null
         }
     }, // end of data
 

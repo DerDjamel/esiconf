@@ -22,7 +22,11 @@ export default {
         return api.post(endpoints.logout);
     },
 
-    user(){
-        return api.post(endpoints.user);
+    user(token){
+        return api.post(endpoints.user , {
+            headers: {
+                Authorization : `bearer ${token}`,
+              }
+        });
     },
 }

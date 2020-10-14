@@ -144,8 +144,4 @@ class ConferenceController extends Controller
     }
 
 
-    public function testevent(){
-        event(new testEvent());
-        return response()->json();
-    }
 }

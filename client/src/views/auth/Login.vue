@@ -20,10 +20,9 @@
                     <v-text-field
                     label="Email"
                     type="text"
-                    v-model="email"
-                    autofocus
-                    clearable
                     outlined
+                    v-model="email"
+                    clearable
                     dense
                     :rules="emailRules"
                     ></v-text-field>
@@ -32,9 +31,9 @@
                     <v-text-field
                     type="password"
                     label="Password"
+                    outlined
                     v-model="password"
                     clearable
-                    outlined
                     dense
                     :rules="passwordRules"
                     ></v-text-field>
@@ -46,12 +45,22 @@
             <v-col cols="5" class="d-flex justify-center align-center">
                 <v-btn 
                 depressed
-                large
+                tile
                 color="primary"
                 @click="login"
                 :loading="loading"
                 :disabled="!valid"
                 >Login</v-btn>
+            </v-col>
+
+            <!-- Login button -->
+            <v-col cols="5" class="d-flex justify-center align-center">
+                <v-btn 
+                depressed
+                tile
+                color="primary"
+                to="/register"
+                >Make an account</v-btn>
             </v-col>
             <!-- Errors -->
             <v-col  cols="5">
@@ -109,7 +118,7 @@ export default {
                 .then( ({ data }) => {
                     this.$store.dispatch('auth/loginSuccess', data);
                     // fethc the user
-                     this.$store.dispatch('auth/fetchUser');
+                     this.$store.dispatch('auth/fetchUser', data.access_token);
 
                     this.$router.push({ name : "Home" });
                 })

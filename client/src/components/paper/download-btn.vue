@@ -1,6 +1,6 @@
 <template>
     <v-btn class="ma-2" tile outlined color="primary" @click.stop="download">
-        <v-icon left>mdi-file-download-outline</v-icon> Download Paper
+        <v-icon left>mdi-file-download-outline</v-icon>Download
     </v-btn>
 </template>
 

@@ -25,12 +25,14 @@
               </v-col>
 
               <v-col cols="10">
-                <v-text-field
-                  label="author :"
-                  placeholder="email of author"
-                  v-model="author"
-                  type='email'
-                ></v-text-field>
+                <p class="caption mb-n1">Write the email of all the authors and press entre to store it</p>
+                <v-combobox
+                  v-model="emails"
+                  label="Email of authors here"
+                  multiple
+                  chips flat
+                >
+                </v-combobox>
               </v-col>
 
               <v-col cols="12">
@@ -50,7 +52,7 @@
           </v-form>
           <v-divider></v-divider>
           <v-card-actions class="d-flex justify-center my-2">
-            <v-btn depressed color="primary" @click.stop="submitPaper">Submit Paper</v-btn>
+            <v-btn :loading="loading" depressed color="primary" @click.stop="submitPaper">Submit Paper</v-btn>
           </v-card-actions>
 
         </v-card>
@@ -74,6 +76,8 @@ export default {
     comment: null,
     paper: null,
     author: null,
+
+    emails : null,
   }),
 
   created(){
@@ -104,6 +108,8 @@ export default {
 
     async submitPaper(){
       try {
+        this.loading = true;
+        this.error = null;
         const paper_data = new FormData();
         paper_data.append('paper', this.paper);
         paper_data.append('abstract', this.abstract);
@@ -112,15 +118,20 @@ export default {
         paper_data.append('author[]', this.author);
         paper_data.append('conference_id', this.conference.id);
 
+        this.emails.forEach((email) => {
+          paper_data.append('author[]', email);
+        });
+
         const {data} = await PaperService.store(paper_data);
-        console.log(data);
-        /*
-        product_id_list.forEach((item) => {
-          bodyFormData.append('product_id_list[]', item);
-        });*/
+        this.loading = false;
+        this.error = null;
+        
+        this.$router.push(`/paper/${data.paper.id}`);
+        
 
       } catch (error) {
-        console.log(error);
+        this.loading = false;
+        this.error = error;
       }
     }
 

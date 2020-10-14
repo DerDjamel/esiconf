@@ -34,7 +34,7 @@ const mutations = {
 
     loginFailure(state, { error }){
         state.loading   = false;
-        state.error     = error;
+        state.error     = error + " : Login credentials are incorrect";
         state.isLogged  = false;
     },
 
@@ -54,7 +54,7 @@ const mutations = {
         state.user      = null;
         state.token     = null;
         state.isLogged = false;
-        Cookies.remove("token");
+        Cookies.remove("access_token");
     }
 };
 
@@ -75,9 +75,10 @@ const actions = {
         commit('logout');
     },
 
-    async fetchUser({ commit }){
+    async fetchUser({ commit }, token = null){
         try {
-            const { data } = await AuthenticationService.user();
+            console.log();
+            const { data } = await AuthenticationService.user(token);
             commit('fetchUserSuccess', data);
         } catch (error) {
             commit('ferchUserFailure');

@@ -1,18 +1,33 @@
 <template>
   <v-container fluid style="overflow: auto">
-      <v-row class="justify-center align-center">
+        <v-alert
+        border="left"
+        colored-border
+        type="error"
+        elevation="2"
+        dense
+        v-if="error"
+        >
+            Oops ! something went wrong, try again !
+        </v-alert>
+      <v-row v-else class="justify-center align-center">
           <v-col cols="12">
-              <v-card outlined>
+              <v-card :loading="loading" outlined>
                 <v-card-title class="my-n2">{{user.name}} Papers :</v-card-title>
                 <v-divider></v-divider>
-                <v-data-table
+                <v-data-table v-if="papers"
                     dense
                     fixed-header
                     :headers="headers"
                     :items="papers"
                     :items-per-page="10"
                     class="elevation-1"
-                ></v-data-table>
+                >
+                
+                    <template v-slot:no-data>
+                        <span class="font-weight-bold">You have no Papers !</span>
+                    </template>
+                </v-data-table>
 
               </v-card>
           </v-col>
@@ -56,6 +71,8 @@ export default {
                 },
             ], // end of headers
             papers : [],
+            loading : false,
+            error: null
         }
     }, // end of data
 

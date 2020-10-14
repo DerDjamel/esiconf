@@ -1,6 +1,6 @@
 <template>
   <article class="mini-conference">
-      <v-card max-width="560px" min-height="200px" outlined>
+      <v-card :to="conferenceLink"  max-width="560px" min-height="200px" outlined>
           <!-- Confernce Name -->
           <v-card-title>
               {{ conference.name }}
@@ -32,6 +32,9 @@ export default {
     computed: {
         conference_description(){
             return this.conference.description.substr(0, 200) + "...";
+        },
+        conferenceLink(){
+            return `/conference/${this.conference.slug}`;
         }
     }
 }

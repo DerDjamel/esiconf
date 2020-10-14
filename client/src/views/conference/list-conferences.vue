@@ -1,7 +1,25 @@
 <template>
   <div>
       <v-container class="py-1">
-          <v-row>
+            <v-alert
+            border="left"
+            colored-border
+            type="error"
+            elevation="2"
+            dense
+            v-if="error"
+            >
+                Oops ! something went wrong, try again !
+            </v-alert>
+            <v-alert class="mt-5" v-if="conferences.length == 0"
+            border="top"
+            colored-border
+            type="info"
+            elevation="2"
+            >
+            <span class="font-weight-bold">No Conferences found !</span>
+            </v-alert>
+          <v-row v-if="conferences">
               <v-col cols="6" v-for="c in conferences" :key="c.id">
                 <MiniConference :conference="c"></MiniConference>
               </v-col>

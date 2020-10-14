@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Paper;
 use App\Author;
+use App\User;
 use App\Reviewer;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\Paper as PaperResource;
@@ -43,7 +44,7 @@ class PaperController extends Controller
         ]);
 
         $path = $request->paper->store('papers');
-        
+        $emails = $request->author;
         $paper = Paper::create([
             'title'         => $request->title,
             'abstract'      => $request->abstract,
@@ -53,14 +54,47 @@ class PaperController extends Controller
         ]);
 
         // add all the authors
-        foreach($request->author as $author_id){
-            $paper->authors()->create(['user_id' => $author_id]);
+        foreach($emails as $i => $email){
+            if($i == 0) continue;
+            $user = User::where('email', $email)->first();
+            if($user == null) return response()->json(['message' => $email . ' does not exist!'],404);
+            $paper->authors()->create(['user_id' => $user->id]);
         }
+
         //send res
         return response()->json([
             'message'   => 'Your Paper has been submitted',
             'paper'     => $paper
         ]);
+    }
+
+    public function update(Request $request, Paper $paper)
+    {
+
+        $request->validate([
+            'title'     => 'required',
+            'abstract'  => 'required',
+        ]);
+        
+        if ((Author::where('user_id', auth()->id())->where('paper_id', $paper->id)->get())->first() ){
+            $paper->update([
+                'title'     => $request->title,
+                'abstract'  => $request->abstract,
+                'comment'   => $request->comment || NULL
+            ]);
+    
+            //send res
+            return response()->json([
+                'message'   => 'Your Paper has been updated',
+                'paper'     => $paper
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'You are not an Author of the Paper'
+            ], 403);
+        }
+
+        
     }
 
     /**
@@ -89,12 +123,12 @@ class PaperController extends Controller
             $paper->delete();
             return response()->json([
                 'message' => 'Paper has been deleted'
-            ]);
+            ], 200);
         }
 
         return response()->json([
             'error' => 'You are not an Author of the Paper or the Chair of the Conference'
-        ]);
+        ], 403);
     }
 
     public function user_papers()

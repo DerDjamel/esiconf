@@ -1,18 +1,38 @@
 <template>
   <v-container fluid style="overflow: auto">
-      <v-row class="justify-center align-center">
+    <v-alert
+        border="left"
+        colored-border
+        type="error"
+        elevation="2"
+        dense
+        v-if="error"
+    >
+        Oops ! something went wrong, try again !
+    </v-alert>
+      <v-row v-else class="justify-center align-center">
           <v-col cols="12">
-              <v-card outlined>
+              <v-card :loading="loading" outlined>
                 <v-card-title class="my-n2">{{user.name}} Conferences :</v-card-title>
                 <v-divider></v-divider>
-                <v-data-table
-                    dense
+                <v-data-table v-if="conferences"
+                    
                     fixed-header
                     :headers="headers"
+                    show-expand
                     :items="conferences"
                     :items-per-page="10"
                     class="elevation-1"
-                ></v-data-table>
+                >
+                    <template v-slot:expanded-item="{ headers, item }">
+                        <td :colspan="headers.length">
+                            <v-btn class="ma-2" small tile outlined color="primary" :to="{ name: 'SingleConference', params: { slug: item.slug }}">show</v-btn>
+                        </td>
+                    </template>
+                    <template v-slot:no-data>
+                        You have no conferences !
+                    </template>
+                </v-data-table>
 
               </v-card>
           </v-col>
@@ -66,6 +86,8 @@ export default {
                 },
             ], // end of headers
             conferences : [],
+            error: null,
+            loading: false,
         }
     }, // end of data
 

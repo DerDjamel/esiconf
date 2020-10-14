@@ -10,6 +10,14 @@ export default {
         return api.post(`/paper/`, info, { 'content-type': 'application/x-www-form-urlencoded' },);
     },
 
+    update(id, paper){
+        return api.put(`/paper/${id}`, paper);
+    },
+
+    destroy(id){
+        return api.delete(`/paper/${id}`);
+    },
+
     user_papers(){
         return api.get(`/user/paper`);
     },
