@@ -48,10 +48,8 @@ class AuthController extends Controller
             'job'           => 'required',
             'email'         => 'required|email|unique:users',
             'password'      => 'required|min:3',
-            'photo'         => 'required|file|image|between:1,20000'
         ]);
-        
-        $path = $request->photo->store('photos');
+    
         
 
         $user = new User();

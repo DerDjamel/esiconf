@@ -41,6 +41,16 @@ class ConferenceController extends Controller
      */
     public function store(StoreConference $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'country' => 'required',
+            'city' => 'required',
+            'start' => 'required|date|before:end',
+            'webpage' => 'required',
+            'end' => 'required|date|after:start',
+        ]);
+
         $conference = new ConferenceResource(auth()->user()->conferences()->create($request->all()));
         return response()->json([
             'conference'    =>  $conference,
@@ -70,6 +80,17 @@ class ConferenceController extends Controller
     public function update(StoreConference $request, Conference $conference)
     {
         $this->authorize('update', $conference);
+        
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'country' => 'required',
+            'city' => 'required',
+            'start' => 'required|date|before:end',
+            'webpage' => 'required',
+            'end' => 'required|date|after:start',
+        ]);
+
         $conference->update($request->all());
 
         return response()->json([

@@ -4,7 +4,8 @@ import VueRouter from 'vue-router'
 import store from '@/store';
 
 // views
-import Home from '@/views/Home.vue'
+import Profile from '@/components/profile/profile-card.vue';
+//import Home from '@/views/Home.vue';
 import Login from '@/views/auth/Login.vue';
 import Register from '@/views/auth/Register.vue'
 import ListConferences from '@/views/conference/list-conferences.vue';
@@ -35,7 +36,7 @@ Vue.use(VueRouter)
     {
       path: '/',
       name: 'Home',
-      component: Home,
+      component: Profile,
       meta : {
         middleware : [auth, authCheck]
       }

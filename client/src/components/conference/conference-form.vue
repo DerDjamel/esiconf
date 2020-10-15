@@ -5,6 +5,13 @@
         <v-card outlined>
           <v-card-title class="text-h6">Create a Conference :</v-card-title>
           <v-divider></v-divider>
+          <v-alert
+            dense
+            outlined
+            type="error" v-if="error"
+          >
+            {{ setError }}
+          </v-alert>
           <v-form class="pa-5">
             <v-row class="justify-start">
               <v-col cols="10">
@@ -12,13 +19,6 @@
                   v-model="name"
                   label="Name :"
                   placeholder="Name of the Conference"
-                ></v-text-field>
-              </v-col>
-
-              <v-col cols="5">
-                <v-text-field
-                  label="Abbreviation :"
-                  placeholder="The Conference Abbreviation"
                 ></v-text-field>
               </v-col>
 
@@ -79,7 +79,7 @@
           </v-form>
           <v-divider></v-divider>
           <v-card-actions class="d-flex justify-center my-2">
-            <v-btn depressed color="primary" @click.stop="createConference">Create Conference</v-btn>
+            <v-btn :loading='loading' depressed color="primary" @click.stop="createConference">Create Conference</v-btn>
           </v-card-actions>
 
         </v-card>
@@ -105,11 +105,20 @@ export default {
     end: null,
     webpage: null,
     error : null,
+
   }),
+
+  computed : {
+    setError(){
+      return Object.values(this.error)[0][0];
+    }
+  },
 
   methods : {
     async createConference(){
       try {
+        this.loading = true;
+        this.error = null;
         const { data } = await ConferenceService.create({
           name : this.name,
           description : this.description,
@@ -119,15 +128,18 @@ export default {
           end : this.end,
           webpage: this.webpage
         }); // and of request
-
+        this.loading = false;
         this.error = null;
+
 
         this.$router.push({ path : `/conference/${data.conference.slug}` });
 
       } catch (error) {
-        console.log(error);
+        this.loading = false;
+        this.error = error.response.data.errors;
       }
-    }
+    },
+
   }
 
 }

@@ -145,7 +145,7 @@ export default {
         mini: true,
         under: true,
         user_items : [
-        {icon : 'mdi-account-circle', text: 'Profile', link : '/profile'}
+        {icon : 'mdi-account-circle', text: 'Profile', link : '/'}
         ],
         resources_items : [
         {icon : 'mdi-text-box-search-outline', text: 'Browse Conferences', link : "/conferences"}

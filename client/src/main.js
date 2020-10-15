@@ -3,20 +3,17 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
-
+import flash from './components/globale/flash.vue';
 Vue.config.productionTip = false
 
-import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
 
-window.Pusher = Pusher;
+Vue.component('flash', flash);
 
-window.Echo = new Echo({
-  broadcaster: 'pusher',
-  key: 'd1b801ab47517e6bf62d',
-  cluster: 'eu',
-  encrypted: true
-});
+
+window.events = new Vue();
+window.flash = function(message){
+  window.events.$emit('flash', message);
+}
 
 new Vue({
   router,

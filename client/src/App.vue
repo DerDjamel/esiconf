@@ -4,6 +4,7 @@
     <!-- Main Content -->
     <v-main>
       <router-view></router-view>
+      <flash message=""></flash>
     </v-main>
 
 

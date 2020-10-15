@@ -50,13 +50,13 @@
               </v-col>
 
               <v-col cols="4">
-                <v-select
+                <v-autocomplete
                   dense
                   :items="countries"
                   label="Country"
                   outlined
                   v-model="country"
-                ></v-select>
+                ></v-autocomplete>
               </v-col>
 
 
@@ -88,13 +88,13 @@
 </template>
 
 <script>
-
+import countries from '@/utils/data/countries';
 import AuthenticationService from '@/services/AuthenticationService';
 
 export default {
   props: ['slug'],
   data: () => ({
-    countries : ['country', 'country', 'country', 'country',],
+    countries : countries,
     name: null,
     email: null,
     password:null,

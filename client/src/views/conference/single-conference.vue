@@ -74,6 +74,13 @@
                         </v-card-actions>
                     </v-card>
                 </section>
+                <section>
+                    <v-card outlined class="mt-2 pa-2">
+                        <v-card-actions>
+                            <v-btn color="primary" tile class="mr-2" :to="submit_paper_link">Submit Paper </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </section>
             </v-col>
 
             <v-col cols="3" v-if="conference">
@@ -271,7 +278,10 @@ export default {
     },
 
     computed : {
-        isChair: function () { return this.$store.getters['auth/user'].id === this.conference.chair.id; }
+        isChair: function () { return this.$store.getters['auth/user'].id === this.conference.chair.id; },
+        submit_paper_link(){
+            return `/paper/create/conference/${this.conference.slug}`;
+        }
     },
 
     created(){

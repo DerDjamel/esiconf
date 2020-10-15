@@ -13,13 +13,13 @@
       <v-row v-else class="justify-center align-center">
           <v-col cols="12">
               <v-card :loading="loading" outlined>
-                <v-card-title class="my-n2">{{user.name}} Papers :</v-card-title>
+                <v-card-title class="my-n2">{{user.name}} Papers (As an Author):</v-card-title>
                 <v-divider></v-divider>
                 <v-data-table v-if="papers"
                     dense
-                    fixed-header
+                    fixed-header show-expand
                     :headers="headers"
-                    :items="papers"
+                    :items="author_papers"
                     :items-per-page="10"
                     class="elevation-1"
                 >
@@ -27,8 +27,37 @@
                     <template v-slot:no-data>
                         <span class="font-weight-bold">You have no Papers !</span>
                     </template>
-                </v-data-table>
 
+                    <template v-slot:expanded-item="{ headers, item }">
+                        <td :colspan="headers.length">
+                            <v-btn class="ma-2" small tile outlined color="primary" :to="{ name: 'SinglePaper', params: { id: item.id }}">show</v-btn>
+                        </td>
+                    </template>
+                </v-data-table>
+              </v-card>
+
+              <v-card :loading="loading" outlined class="mt-5">
+                <v-card-title class="my-n2">{{user.name}} Papers (As a Reviewer):</v-card-title>
+                <v-divider></v-divider>
+                <v-data-table v-if="papers"
+                    dense show-expand
+                    fixed-header
+                    :headers="headers"
+                    :items="reviewer_papers"
+                    :items-per-page="10"
+                    class="elevation-1"
+                >
+                
+                    <template v-slot:no-data>
+                        <span class="font-weight-bold">You have no Papers !</span>
+                    </template>
+
+                    <template v-slot:expanded-item="{ headers, item }">
+                        <td :colspan="headers.length">
+                            <v-btn class="ma-2" small tile outlined color="primary" :to="{ name: 'SinglePaper', params: { id: item.id }}">show</v-btn>
+                        </td>
+                    </template>
+                </v-data-table>
               </v-card>
           </v-col>
       </v-row>
@@ -101,6 +130,14 @@ export default {
     computed : {
         user(){
             return this.$store.getters['auth/user'];
+        },
+
+        author_papers(){
+            return this.papers.filter(paper => paper.is_author);
+        },
+
+        reviewer_papers(){
+            return this.papers.filter(paper => paper.is_reviewer);
         },
     },
         

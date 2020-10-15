@@ -4,6 +4,13 @@
         <v-card outlined>
           <v-card-title class="text-h6">Edit Conference :</v-card-title>
           <v-divider></v-divider>
+          <v-alert
+            dense
+            outlined
+            type="error" v-if="error"
+          >
+            {{ setError }}
+          </v-alert>
           <v-form class="pa-5">
             <v-row class="justify-start">
               <v-col cols="10">
@@ -31,23 +38,23 @@
 
 
               <v-col cols="6">
-                <v-select
+                <v-autocomplete
                   dense
                   :items="countries"
                   label="Country"
                   outlined
                   v-model="country"
-                ></v-select>
+                ></v-autocomplete>
               </v-col>
 
               <v-col cols="6">
-                <v-select
+                <v-autocomplete
                   dense
                   :items="countries"
                   label="City"
                   outlined
                   v-model="city"
-                ></v-select>
+                ></v-autocomplete>
               </v-col>
 
               <v-col cols="10">
@@ -88,12 +95,14 @@
 
 <script>
 import ConferenceService from '@/services/ConferenceService';
-
+import countries from '@/utils/data/countries';
+import cities from '@/utils/data/cities';
 
 export default {
     props : ['conference'],
     data: () => ({
-        countries : ['country', 'country', 'country', 'country',],
+        countries : countries,
+        cities : cities,
         name: null,
         description: null,
         country: null,
@@ -104,9 +113,18 @@ export default {
         error : null,
     }),
 
+    computed : {
+      setError(){
+        return Object.values(this.error)[0][0];
+      }
+    },
+
     methods : {
         async updateConference(){
+
             try {
+                this.loading = true;
+                this.error = null;
                 const { data } = await ConferenceService.update({
                 name : this.name,
                 description : this.description,
@@ -118,11 +136,13 @@ export default {
                 slug: this.conference.slug,
                 }); // and of request
 
+                this.loading = false;
                 this.error = null;
                 this.$emit('closeEditMode', data.conference);
 
             } catch (error) {
-                console.log(error);
+                this.loading = false;
+                this.error = error.response.data.errors;
             }
         },
 

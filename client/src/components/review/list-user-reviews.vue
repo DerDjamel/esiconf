@@ -16,7 +16,7 @@
                 <v-card-title class="my-n2">{{user.name}} Reviews :</v-card-title>
                 <v-divider></v-divider>
                 <v-data-table
-                    dense
+                    dense show-expand
                     fixed-header
                     :headers="headers"
                     :items="reviews"
@@ -25,6 +25,12 @@
                 >
                     <template v-slot:no-data>
                         <span class="font-weight-bold">You have no Reviews !</span>
+                    </template>
+
+                    <template v-slot:expanded-item="{ headers, item }">
+                        <td :colspan="headers.length">
+                            <v-btn class="ma-2" small tile outlined color="primary" :to="{ name: 'SingleReview', params: { id: item.id }}">show</v-btn>
+                        </td>
                     </template>
                 </v-data-table>
 
