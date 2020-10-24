@@ -2,6 +2,13 @@
   <v-container>
     <v-row class="justify-center align-center">
       <v-col cols="7">
+                <v-card flat>
+                    <v-card-title class="justify-center">
+                        <h2 class="h3 font-weight-bold text-uppercase">ESINCONF</h2>
+                    </v-card-title>
+                </v-card>
+            </v-col>
+      <v-col cols="7">
         <v-card outlined>
           <v-card-title class="text-h6">Register :</v-card-title>
           <v-divider></v-divider>
@@ -59,26 +66,24 @@
                 ></v-autocomplete>
               </v-col>
 
-
-              <v-col cols="12">
-                <v-row>
-                    <v-col cols="2" class="mr-n8">
-                        <v-avatar>
-                            <v-icon v-if="!photo">mdi-account-circle-outline</v-icon>
-                            <img v-else :src="avatar">
-                        </v-avatar>
-                    </v-col>
-                    <v-col cols="5">
-                        <v-file-input v-model="photo" label="Your Profile Photo" outlined dense></v-file-input>
-                    </v-col>
-                </v-row>
+              <v-col cols="10">
+                <v-alert
+                  dense
+                  outlined
+                  type="error" v-if="error"
+                >
+                  {{ setError }}
+                </v-alert>
               </v-col>
+
+
+              
 
             </v-row>
           </v-form>
           <v-divider></v-divider>
           <v-card-actions class="d-flex justify-center my-2">
-            <v-btn depressed color="primary" @click.stop="avatar" class="pa-5">Register</v-btn>
+            <v-btn :loading="loading" depressed color="primary" @click.stop="register" class="pa-5">Register</v-btn>
           </v-card-actions>
 
         </v-card>
@@ -100,16 +105,19 @@ export default {
     password:null,
     org: null,
     country: null,
-    photo: null,
     job: null,
     loading: false,
     error : null,
   }),
 
   computed : {
+    setError(){
+      return Object.values(this.error)[0][0];
+    }
+    /*
     avatar(){
         return URL.createObjectURL(this.photo);
-    }
+    }*/
   },
 
   methods : {
@@ -122,10 +130,10 @@ export default {
         user.append('name', this.name);
         user.append('email', this.email);
         user.append('password', this.password);
-        user.append('organization', this.organization);
+        user.append('organization', this.org);
         user.append('country', this.country);
         user.append('job', this.job);
-        user.append('photo', this.photo);
+        
         await AuthenticationService.register(user);
 
         this.loading = false;
@@ -134,8 +142,7 @@ export default {
         this.$router.push({ name : "Login" });
       } catch (error) {
         this.loading = false;
-        this.error = error.response.data;
-        console.log(error);
+        this.error = error.response.data.errors;
       }
     },
 

@@ -5,13 +5,6 @@
         <v-card outlined>
           <v-card-title class="text-h6">Create a Conference :</v-card-title>
           <v-divider></v-divider>
-          <v-alert
-            dense
-            outlined
-            type="error" v-if="error"
-          >
-            {{ setError }}
-          </v-alert>
           <v-form class="pa-5">
             <v-row class="justify-start">
               <v-col cols="10">
@@ -30,7 +23,6 @@
                   placeholder="Write a description that fits the Conference ."
                 ></v-textarea>
               </v-col>
-
 
               <v-col cols="6">
                 <v-autocomplete
@@ -60,7 +52,7 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col cols="3">
+              <v-col cols="5">
                 <v-text-field
                   label="Start:"
                   type="date"
@@ -68,7 +60,7 @@
                 ></v-text-field>
               </v-col> 
 
-              <v-col cols="3">
+              <v-col cols="5">
                 <v-text-field
                   label="End:"
                   type="date"
@@ -77,6 +69,13 @@
               </v-col>          
             </v-row>
           </v-form>
+          <v-alert
+            dense
+            outlined
+            type="error" v-if="error"
+          >
+            {{ setError }}
+          </v-alert>
           <v-divider></v-divider>
           <v-card-actions class="d-flex justify-center my-2">
             <v-btn :loading='loading' depressed color="primary" @click.stop="createConference">Create Conference</v-btn>
@@ -130,7 +129,7 @@ export default {
         }); // and of request
         this.loading = false;
         this.error = null;
-
+        window.flash('Conference Created successfully');
 
         this.$router.push({ path : `/conference/${data.conference.slug}` });
 

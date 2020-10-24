@@ -45,6 +45,10 @@ class ReviewController extends Controller
         if (Reviewer::where('user_id', auth()->id())->first()->id === $reviewer_id) {
             return response()->json(['message' => 'You already have a Review for this Paper'], 401);
         }
+        
+        $request->validate([
+            'opinion' => "required",
+        ]);
 
         // now the user is authenticated and is a reviewer of the paper
         // we can add the review to the database

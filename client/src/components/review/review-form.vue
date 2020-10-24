@@ -2,7 +2,7 @@
   <v-container>
     <v-row class="justify-center align-center">
       <v-col cols="7">
-        <v-card outlined>
+        <v-card outlined v-if="paper">
           <v-card-subtitle class="mb-n5">Review for :</v-card-subtitle>
           <v-card-title class="text-h6">{{paper.title}}</v-card-title>
           <v-divider></v-divider>
@@ -29,6 +29,13 @@
          
             </v-row>
           </v-form>
+          <v-alert
+            dense
+            outlined
+            type="error" v-if="error"
+          >
+            {{ setError }}
+          </v-alert>
           <v-divider></v-divider>
           <v-card-actions class="d-flex justify-center my-2">
             <v-btn depressed color="primary" @click.stop="submitReview">Send Review</v-btn>
@@ -58,6 +65,12 @@ export default {
     comment: null,
   }),
 
+  computed : {
+    setError(){
+      return Object.values(this.error)[1].opinion[0];
+    }
+  },
+
   created(){
       this.fetchPaper();
     },
@@ -77,6 +90,7 @@ export default {
           this.paper_error = null;
           this.paper_loading = false;
           this.paper = data;
+          
         } catch (error) {
           this.paper_loading = false;
           this.paper = null;
@@ -97,6 +111,7 @@ export default {
 
         this.error = null;
         console.log(data);
+        window.flash('Review was Created successfully');
 
         this.$router.push({ path : `/review/${data.review_id}` });
 

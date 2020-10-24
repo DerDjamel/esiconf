@@ -26,16 +26,16 @@ class StoreConference extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required'
+            'name' => 'required',
+            'description' => 'required',
+            'country' => 'required',
+            'city' => 'required',
+            'start' => 'required|date|before:end',
+            'webpage' => 'required',
+            'end' => 'required|date|after:start',
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'name.required' => 'The name for the Conference is required',
-        ];
-    }
 
     protected function prepareForValidation()
     {

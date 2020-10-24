@@ -63,7 +63,9 @@ export default {
                 });
                 this.loading = false;
                 this.error = null;
+                window.flash('Your Bid was successfully');
                 this.dialog = false;
+
             } catch (error) {
                 console.log(error);
             }

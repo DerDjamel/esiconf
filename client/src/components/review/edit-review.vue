@@ -29,6 +29,13 @@
          
             </v-row>
           </v-form>
+          <v-alert
+            dense
+            outlined
+            type="error" v-if="error"
+          >
+            {{ setError }}
+          </v-alert>
           <v-divider></v-divider>
           <v-card-actions class="d-flex justify-center my-2">
             <v-btn depressed color="primary" @click.stop="updateReview">Edit Review</v-btn>
@@ -67,7 +74,8 @@ export default {
         }); // and of request
         this.loading = false;
         this.error = null;
-        console.log(data);
+        window.flash('Review was Updated successfully');
+
         this.$emit('closeEditMode', data.review);
 
       } catch (error) {
@@ -87,7 +95,13 @@ export default {
         this.comment = this.review.comment;
         this.opinion = this.review.opinion;
         this.paper  = this.review.paper;
+    },
+
+    computed : {
+    setError(){
+      return Object.values(this.error)[1].opinion[0];
     }
+  },
     
 
 }

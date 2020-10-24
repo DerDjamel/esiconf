@@ -5,6 +5,13 @@
         <v-card outlined>
           <v-card-title class="text-h6">Submit Paper to {{ paper.conference.name }}:</v-card-title>
           <v-divider></v-divider>
+          <v-alert
+            dense
+            outlined
+            type="error" v-if="error"
+          >
+            {{ setError }}
+          </v-alert>
           <v-form class="pa-5">
             <v-row class="justify-start">
               <v-col cols="10">
@@ -65,6 +72,12 @@ export default {
 
   }),
 
+  computed : {
+    setError(){
+      return Object.values(this.error)[0][0];
+    }
+  },
+
   methods : {
     async updatePaper(){
       try {
@@ -79,13 +92,13 @@ export default {
         this.loading = false;
         this.error = null;
         console.log(data.paper);
-
+        window.flash('Paper Updated successfully');
         this.$emit('closeEditMode', data.paper);
         
 
       } catch (error) {
         this.loading = false;
-        this.error = error;
+        this.error = error.response.data.errors;
       }
     },
 

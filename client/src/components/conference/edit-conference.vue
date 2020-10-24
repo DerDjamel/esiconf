@@ -138,6 +138,7 @@ export default {
 
                 this.loading = false;
                 this.error = null;
+                window.flash('Conference Updated successfully');
                 this.$emit('closeEditMode', data.conference);
 
             } catch (error) {

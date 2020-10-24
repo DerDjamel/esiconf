@@ -75,7 +75,7 @@
                     </v-card>
                 </section>
                 <section>
-                    <v-card outlined class="mt-2 pa-2">
+                    <v-card v-if="isChair == false" outlined class="mt-2 pa-2">
                         <v-card-actions>
                             <v-btn color="primary" tile class="mr-2" :to="submit_paper_link">Submit Paper </v-btn>
                         </v-card-actions>
@@ -278,7 +278,9 @@ export default {
     },
 
     computed : {
-        isChair: function () { return this.$store.getters['auth/user'].id === this.conference.chair.id; },
+        isChair(){ 
+            return this.$store.getters['auth/user'].id == this.conference.chair.id; 
+            },
         submit_paper_link(){
             return `/paper/create/conference/${this.conference.slug}`;
         }
@@ -323,6 +325,7 @@ export default {
                 this.delete_loading = true;
                 await ConferenceService.delete(this.conference.slug);
                 // display message
+                window.flash('Conference has been deleted');
                 this.delete_loading = false;
                 this.$router.push('/my-conferences');
             } catch (error) {

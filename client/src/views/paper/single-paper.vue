@@ -132,7 +132,7 @@ export default {
                 console.log(data);
                 this.delete_error = null;
                 this.delete_loading = false;
-                this.$router.go(-1);
+                this.$router.push('/my-papers');
 
             } catch (error) {
                 console.log(error);

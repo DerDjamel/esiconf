@@ -3,7 +3,6 @@
       v-model="snackbar"
       :timeout="timeout"
       color="info"
-      outlined
       top right
     >
       {{ body }}

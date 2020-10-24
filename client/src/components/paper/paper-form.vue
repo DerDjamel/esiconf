@@ -2,9 +2,16 @@
   <v-container>
     <v-row class="justify-center align-center">
       <v-col cols="7">
-        <v-card outlined>
+        <v-card outlined v-if="conference">
           <v-card-title class="text-h6">Submit Paper to {{ conference.name }}:</v-card-title>
           <v-divider></v-divider>
+          <v-alert
+            dense
+            outlined
+            type="error" v-if="error"
+          >
+            {{ setError }}
+          </v-alert>
           <v-form class="pa-5">
             <v-row class="justify-start">
               <v-col cols="10">
@@ -77,11 +84,20 @@ export default {
     paper: null,
     author: null,
 
+    loading: false,
+    error: null,
+
     emails : null,
   }),
 
   created(){
     this.fetchConference();
+  },
+
+  computed : {
+    setError(){
+      return Object.values(this.error)[0][0];
+    }
   },
 
   watch : {
@@ -125,13 +141,13 @@ export default {
         const {data} = await PaperService.store(paper_data);
         this.loading = false;
         this.error = null;
-        
+        window.flash('Paper Created successfully');
         this.$router.push(`/paper/${data.paper.id}`);
         
 
       } catch (error) {
         this.loading = false;
-        this.error = error;
+        this.error = error.response.data.errors;
       }
     }
 

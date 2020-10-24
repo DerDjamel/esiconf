@@ -6,6 +6,14 @@
             <v-col cols="5">
                 <v-card flat>
                     <v-card-title class="justify-center">
+                        <h2 class="h3 font-weight-bold text-uppercase">ESICONF</h2>
+                    </v-card-title>
+                </v-card>
+                
+            </v-col>
+            <v-col cols="5">
+                <v-card flat>
+                    <v-card-title class="justify-center">
                         <h2 class="title font-weight-bold text-uppercase">Login</h2>
                     </v-card-title>
                 </v-card>
